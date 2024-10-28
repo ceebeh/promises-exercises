@@ -1,27 +1,27 @@
 /**
- * @param {string} email 
- * @param {string} password 
+ * @param {string} email
+ * @param {string} password
  * @returns {User | undefined}
  */
-function passwordChecker(email, password){
-  if(email === 'jeff@jeff.jeff' && password === 'jeff'){
-    return {name: 'Jeff Jeffries', email: 'jeff@jeff.jeff'};
+function passwordChecker(email, password) {
+  if (email === "jeff@jeff.jeff" && password === "jeff") {
+    return { name: "Jeff Jeffries", email: "jeff@jeff.jeff" };
   }
   return undefined;
 }
 
 /**
- * @param {string} email 
- * @param {string} password 
- * @param {nodeStyleCallback} cb 
+ * @param {string} email
+ * @param {string} password
+ * @param {nodeStyleCallback} cb
  */
-function passwordCheckerCb(email, password, cb){
+function passwordCheckerCb(email, password, cb) {
   const user = passwordChecker(email, password);
-  if(user){
+  if (user) {
     cb(null, user);
   } else {
     setTimeout(() => {
-      cb('User Not Found!');
+      cb("User Not Found!");
     }, 1000);
   }
 }
@@ -29,15 +29,19 @@ function passwordCheckerCb(email, password, cb){
 /**
  *
  * EXERCISE 1:
- * 
- * @param {string} email 
- * @param {string} password 
+ *
+ * @param {string} email
+ * @param {string} password
  * @returns {Promise<User, string>}
  */
-function passwordCheckerPrms(email, password){
+function passwordCheckerPrms(email, password) {
   return new Promise((resolve, reject) => {
     passwordCheckerCb(email, password, (error, user) => {
-      /* IMPLEMENT ME! */
+      if (error) {
+        reject(error); // Reject the promise if there's an error
+      } else {
+        resolve(user); // Resolve with the user if the credentials are correct
+      }
     });
   });
 }
@@ -49,10 +53,10 @@ function passwordCheckerPrms(email, password){
  */
 
 /**
-  * @callback nodeStyleCallback
-  * @param {*} Error
-  * @param {*} Value
-  */
+ * @callback nodeStyleCallback
+ * @param {*} Error
+ * @param {*} Value
+ */
 
 module.exports = {
   passwordCheckerCb,
